@@ -2,6 +2,7 @@
   <form
     fxLayout="column"
     fxLayoutAlign="center center"
+    fxLayoutGap="10px"
     #form="ngForm"
     (ngSubmit)="onSubmit(form)"
   >
@@ -39,6 +40,34 @@
       >
       <mat-hint align="end">{{ passwordInput.value?.length }} / 6</mat-hint>
     </mat-form-field>
-    <button mat-raised-button type="submit" color="primary">Submit</button>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Your birthdate"
+        [matDatepicker]="picker"
+        [max]="maxDate"
+        ngModel
+        name="birthDate"
+        required
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-checkbox
+      labelPosition="before"
+      name="agree"
+      required
+      ngModel
+      color="primary"
+      >Agree to Terms and Conditions.</mat-checkbox
+    >
+    <button
+      mat-raised-button
+      type="submit"
+      color="primary"
+      [disabled]="form.invalid"
+    >
+      Submit
+    </button>
   </form>
 </section>
