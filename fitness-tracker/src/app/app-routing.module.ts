@@ -1,6 +1,6 @@
-import { TrainingComponent } from './components/training/training.component';
-import { LoginComponent } from './components/auth/login/login.component';
-import { SignupComponent } from './components/auth/signup/signup.component';
+import { TrainingComponent } from './pages/training/training.component';
+import { LoginComponent } from './pages/auth/login/login.component';
+import { SignupComponent } from './pages/auth/signup/signup.component';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
