@@ -16,6 +16,7 @@ import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
+import { DialogComponent } from './components/dialog/dialog.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { FormsModule } from '@angular/forms';
     WelcomeComponent,
     HeaderComponent,
     SidenavListComponent,
+    DialogComponent,
   ],
   imports: [
     BrowserModule,
