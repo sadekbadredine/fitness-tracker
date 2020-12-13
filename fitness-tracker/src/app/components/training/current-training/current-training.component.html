@@ -1,11 +1,21 @@
 <section
   fxLayout="column"
   fxLayoutAlign="center center"
+  fxLayoutGap="-60px"
   class="current-training"
 >
-  <mat-progress-spinner mode="determinate" [value]="progress">
+  <mat-progress-spinner
+    mode="determinate"
+    [value]="progress"
+    diameter="150"
+    strokeWidth="3"
+  >
   </mat-progress-spinner>
-  <h1>{{ progress }}%</h1>
-  <p>You can do it!</p>
-  <button mat-raised-button color="accent" (click)="onStop()">Stop</button>
+  <div class="spinner-value">
+    <p>{{ progress / 10 }}</p>
+  </div>
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <p>You can do it!</p>
+    <button mat-raised-button color="accent" (click)="onStop()">Stop</button>
+  </div>
 </section>

@@ -1,1 +1,18 @@
-<h1 mat-dialog-title>Are you sure</h1>
+<section
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  *ngIf="passedData.progress < 100"
+>
+  <h1 mat-dialog-title>Do you wanna stop?</h1>
+  <mat-dialog-content>
+    <p>You made {{ passedData.progress / 10 }} of 10 sets</p>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-raised-button [mat-dialog-close]="true" color="primary">
+      Yes
+    </button>
+    <button [mat-dialog-close]="false" mat-raised-button color="accent">
+      No
+    </button>
+  </mat-dialog-actions>
+</section>

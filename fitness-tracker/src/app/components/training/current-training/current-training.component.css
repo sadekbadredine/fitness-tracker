@@ -1,3 +1,9 @@
 .current-training {
-  padding: 30px;
+  padding: 110px;
+}
+.spinner-value {
+  position: relative;
+  top: -80px;
+  left: 0px;
+  font-size: 40px;
 }

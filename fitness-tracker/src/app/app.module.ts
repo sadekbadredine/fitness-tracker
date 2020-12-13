@@ -17,6 +17,8 @@ import { LoginComponent } from './pages/auth/login/login.component';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { DialogComponent } from './components/dialog/dialog.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,9 @@ import { DialogComponent } from './components/dialog/dialog.component';
     BrowserAnimationsModule,
     MaterialModule,
     FlexLayoutModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+    }),
     FormsModule,
   ],
   providers: [],
