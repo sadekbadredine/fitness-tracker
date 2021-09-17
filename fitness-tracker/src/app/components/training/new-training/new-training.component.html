@@ -6,10 +6,7 @@
         <mat-form-field appearance="fill">
           <mat-label>Select Exercie</mat-label>
           <mat-select ngModel name="newExercise" required>
-            <mat-option
-              *ngFor="let item of exercises | async"
-              [value]="item.name"
-            >
+            <mat-option *ngFor="let item of exercises" [value]="item.id">
               {{ item.name }}
             </mat-option>
           </mat-select>
