@@ -1,10 +1,12 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from './material.module';
+import { AngularFireModule } from '@angular/fire';
 import { NgModule } from '@angular/core';
 
 import { environment } from '../environments/environment';
@@ -22,6 +24,8 @@ import { LoginComponent } from './pages/auth/login/login.component';
 import { AppComponent } from './app.component';
 
 import { AuthService } from './pages/auth/auth.service';
+import { TrainingService } from './pages/training/training.service';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -38,18 +42,21 @@ import { AuthService } from './pages/auth/auth.service';
     DialogComponent,
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule,
+    AngularFirestoreModule,
+    ReactiveFormsModule,
     FlexLayoutModule,
+    AppRoutingModule,
+    MaterialModule,
+    BrowserModule,
+    FormsModule,
+    CommonModule,
+    AngularFireModule.initializeApp(environment.firebase),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
     }),
-    FormsModule,
-    ReactiveFormsModule,
   ],
-  providers: [AuthService],
+  providers: [AuthService, TrainingService],
   bootstrap: [AppComponent],
   entryComponents: [DialogComponent],
 })

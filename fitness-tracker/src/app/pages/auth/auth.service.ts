@@ -1,16 +1,22 @@
-import { Injectable } from '@angular/core';
 import { AuthData } from './auth-data.model';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from './user.model';
+import { Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  authChange = new Subject<boolean>();
   private user!: User | null;
+
+  constructor(private router: Router) {}
 
   registerUser(authData: AuthData) {
     this.user = new User(
       authData.email,
       Math.round(Math.random() * 1000).toString()
     );
+    this.handleAuthentication();
   }
 
   login(authData: AuthData) {
@@ -18,10 +24,13 @@ export class AuthService {
       authData.email,
       Math.round(Math.random() * 1000).toString()
     );
+    this.handleAuthentication();
   }
 
   logout() {
     this.user = null;
+    this.authChange.next(false);
+    this.router.navigate(['/login']);
   }
 
   getUser() {
@@ -32,9 +41,14 @@ export class AuthService {
     return { ...this.user };
   }
 
-  isAuth() {
-    this.user != null;
+  isAuth(): boolean {
+    return this.user != null;
     //   this != check for value equality, will return true if the user is not equal to null
     // and if it is equal to null, will return false
+  }
+
+  private handleAuthentication() {
+    this.authChange.next(true);
+    this.router.navigate(['training']);
   }
 }

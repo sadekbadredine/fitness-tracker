@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { TrainingService } from 'src/app/pages/training/training.service';
 import { DialogComponent } from '../../../components/dialog/dialog.component';
 
 @Component({
@@ -8,26 +9,29 @@ import { DialogComponent } from '../../../components/dialog/dialog.component';
   styleUrls: ['./current-training.component.css'],
 })
 export class CurrentTrainingComponent implements OnInit {
-  @Output() trainingExit = new EventEmitter();
   progress = 0;
   timer: any;
 
-  constructor(private dialog: MatDialog) {}
+  constructor(
+    private dialog: MatDialog,
+    private trainingService: TrainingService
+  ) {}
 
   ngOnInit(): void {
     this.startOrResumeTimer();
   }
 
   startOrResumeTimer() {
+    this.trainingService.getRunningExercise();
+    const step =
+      (this.trainingService.getRunningExercise().duration / 100) * 1000;
     this.timer = setInterval(() => {
-      this.progress = this.progress + 5;
+      this.progress = this.progress + 1;
       if (this.progress >= 100) {
         clearInterval(this.timer);
-        setTimeout(() => {
-          this.trainingExit.emit();
-        }, 2000);
+        this.trainingService.completeExercise();
       }
-    }, 500);
+    }, step);
   }
 
   onStop() {
@@ -38,8 +42,9 @@ export class CurrentTrainingComponent implements OnInit {
       },
     });
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) this.trainingExit.emit();
-      else this.startOrResumeTimer();
+      if (result) {
+        this.trainingService.cancelExercise(this.progress);
+      } else this.startOrResumeTimer();
     });
   }
 }

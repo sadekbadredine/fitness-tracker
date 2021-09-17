@@ -1,4 +1,9 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { TrainingService } from 'src/app/pages/training/training.service';
+import { Exercise } from 'src/app/pages/training/exercise.model';
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-new-training',
@@ -6,13 +11,20 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   styleUrls: ['./new-training.component.css'],
 })
 export class NewTrainingComponent implements OnInit {
-  @Output() trainStart = new EventEmitter<void>();
+  exercises!: Observable<any>;
 
-  constructor() {}
+  constructor(
+    private trainingService: TrainingService,
+    private fireStore: AngularFirestore
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.exercises = this.fireStore
+      .collection('availableExercises')
+      .valueChanges();
+  }
 
-  onStartTraining() {
-    this.trainStart.emit();
+  onStartTraining(newExerciseForm: NgForm) {
+    this.trainingService.startExerciese(newExerciseForm.value.newExercise);
   }
 }
