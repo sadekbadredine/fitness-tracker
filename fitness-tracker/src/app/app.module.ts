@@ -2,6 +2,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -29,28 +30,29 @@ import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    CurrentTrainingComponent,
+    PastTrainingComponent,
+    NewTrainingComponent,
+    SidenavListComponent,
+    TrainingComponent,
+    WelcomeComponent,
+    DialogComponent,
+    HeaderComponent,
     SignupComponent,
     LoginComponent,
-    TrainingComponent,
-    CurrentTrainingComponent,
-    NewTrainingComponent,
-    PastTrainingComponent,
-    WelcomeComponent,
-    HeaderComponent,
-    SidenavListComponent,
-    DialogComponent,
+    AppComponent,
   ],
   imports: [
     BrowserAnimationsModule,
     AngularFirestoreModule,
+    AngularFireAuthModule,
     ReactiveFormsModule,
     FlexLayoutModule,
     AppRoutingModule,
     MaterialModule,
     BrowserModule,
-    FormsModule,
     CommonModule,
+    FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,

@@ -10,14 +10,13 @@ const routes: Routes = [
   { path: '', component: WelcomeComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'training', component: TrainingComponent },
-  // { path: 'training', component: TrainingComponent, canActivate: [AuthGuard] },
+  { path: 'training', component: TrainingComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  // providers: [AuthGuard],
+  providers: [AuthGuard],
   // guards are fine to be provided in the routing module
 })
 export class AppRoutingModule {}
