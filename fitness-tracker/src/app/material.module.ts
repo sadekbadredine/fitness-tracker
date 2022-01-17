@@ -3,6 +3,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -26,6 +27,7 @@ import { NgModule } from '@angular/core';
     MatNativeDateModule,
     MatFormFieldModule,
     MatPaginatorModule,
+    MatSnackBarModule,
     MatCheckboxModule,
     MatToolbarModule,
     MatSidenavModule,
@@ -46,6 +48,7 @@ import { NgModule } from '@angular/core';
     MatNativeDateModule,
     MatFormFieldModule,
     MatPaginatorModule,
+    MatSnackBarModule,
     MatCheckboxModule,
     MatToolbarModule,
     MatSidenavModule,

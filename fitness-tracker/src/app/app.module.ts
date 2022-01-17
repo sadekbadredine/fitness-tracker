@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from './material.module';
 import { AngularFireModule } from '@angular/fire';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { environment } from '../environments/environment';
@@ -24,9 +25,9 @@ import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { AppComponent } from './app.component';
 
-import { AuthService } from './pages/auth/auth.service';
 import { TrainingService } from './pages/training/training.service';
-import { CommonModule } from '@angular/common';
+import { AuthService } from './pages/auth/auth.service';
+import { UIService } from './components/UI/ui.service';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,7 @@ import { CommonModule } from '@angular/common';
       enabled: environment.production,
     }),
   ],
-  providers: [AuthService, TrainingService],
+  providers: [AuthService, TrainingService, UIService],
   bootstrap: [AppComponent],
   entryComponents: [DialogComponent],
 })

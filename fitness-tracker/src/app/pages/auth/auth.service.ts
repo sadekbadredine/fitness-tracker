@@ -25,6 +25,7 @@ service cloud.firestore {
 allow read, write means that we should allow read and write access if incoming request has an authentiated user
 */
 import { TrainingService } from '../training/training.service';
+import { UIService } from 'src/app/components/UI/ui.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthData } from './auth-data.model';
 import { Injectable } from '@angular/core';
@@ -37,9 +38,10 @@ export class AuthService {
   private isAuthenticated = false;
 
   constructor(
-    private router: Router,
+    private trainingService: TrainingService,
     private fireAuth: AngularFireAuth,
-    private trainingService: TrainingService
+    private uiService: UIService,
+    private router: Router
   ) {}
 
   initAuthListiner() {
@@ -61,14 +63,29 @@ export class AuthService {
 
   registerUser(authData: AuthData) {
     // angularfire handle the token storage, and attaches it to ungoing request
-    this.fireAuth.createUserWithEmailAndPassword(
-      authData.email,
-      authData.password
-    );
+    this.uiService.loadingStateChanged.next(true);
+    this.fireAuth
+      .createUserWithEmailAndPassword(authData.email, authData.password)
+      .then(() => {
+        this.uiService.loadingStateChanged.next(false);
+      })
+      .catch((error) => {
+        this.uiService.loadingStateChanged.next(false);
+        this.uiService.showSnackbar(error.message, undefined, 3500);
+      });
   }
 
   login(authData: AuthData) {
-    this.fireAuth.signInWithEmailAndPassword(authData.email, authData.password);
+    this.uiService.loadingStateChanged.next(true);
+    this.fireAuth
+      .signInWithEmailAndPassword(authData.email, authData.password)
+      .then(() => {
+        this.uiService.loadingStateChanged.next(false);
+      })
+      .catch((error) => {
+        this.uiService.loadingStateChanged.next(false);
+        this.uiService.showSnackbar(error.message, undefined, 3000);
+      });
   }
 
   logout() {

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Subject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { UIService } from 'src/app/components/UI/ui.service';
 import { Exercise } from './exercise.model';
 
 @Injectable({ providedIn: 'root' })
@@ -14,7 +15,10 @@ export class TrainingService {
   private runningExercise: any | Exercise;
   private firebaseSubs: Subscription[] = [];
 
-  constructor(private fireStore: AngularFirestore) {}
+  constructor(
+    private fireStore: AngularFirestore,
+    private uiService: UIService
+  ) {}
 
   startExerciese(selectedId: string) {
     this.runningExercise = this.availableExercises.find(
@@ -51,6 +55,7 @@ export class TrainingService {
     //   .valueChanges();
     // valueChanges gives us only the value of the document
     // it doens't give us the name of the document, the ID
+    this.uiService.loadingStateChanged.next(true);
     this.firebaseSubs.push(
       this.fireStore
         .collection('availableExercises')
@@ -65,10 +70,20 @@ export class TrainingService {
             });
           })
         )
-        .subscribe((exercises: Exercise[]) => {
-          this.availableExercises = exercises;
-          this.exercisesChanged.next([...this.availableExercises]);
-        })
+        .subscribe(
+          (exercises: Exercise[]) => {
+            this.uiService.loadingStateChanged.next(false);
+            this.availableExercises = exercises;
+            this.exercisesChanged.next([...this.availableExercises]);
+          },
+          (error) => {
+            this.uiService.showSnackbar(
+              'Error while fetching data, please try again',
+              undefined,
+              3000
+            );
+          }
+        )
     );
   }
 
@@ -77,13 +92,24 @@ export class TrainingService {
   }
 
   fetchFinishedExercises() {
+    this.uiService.loadingStateChanged.next(false);
     this.firebaseSubs.push(
       this.fireStore
         .collection('finishedExercises')
         .valueChanges()
-        .subscribe((exercises: any[]) => {
-          this.finishedExercisesChanged.next(exercises);
-        })
+        .subscribe(
+          (exercises: any[]) => {
+            this.uiService.loadingStateChanged.next(true);
+            this.finishedExercisesChanged.next(exercises);
+          },
+          (error) => {
+            this.uiService.showSnackbar(
+              'Error while fetching data, please try again',
+              undefined,
+              3000
+            );
+          }
+        )
     );
   }
 
